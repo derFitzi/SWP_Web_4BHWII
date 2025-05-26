@@ -1,0 +1,25 @@
+﻿@model IEnumerable<WebProjekt.Models.Order>
+@{
+    ViewData["Title"] = "Bestellungen";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (Model.Any())
+{
+        <ul>
+        @foreach (var order in Model)
+        {
+                    <li>
+                        <a asp-controller="Shop" asp-action="BestellungDetails" asp-route-id="@order.OrderId">
+                            Bestellung @order.OrderId - @order.Status
+                        </a>
+                    </li>
+        }
+        </ul>
+}
+else
+{
+        <p>Sie haben keine Bestellungen.</p>
+}
+ 

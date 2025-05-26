@@ -1,0 +1,18 @@
+﻿@model WebProjekt.Models.Article
+
+<div class="col-md-4 mb-4">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">@Model.Name</h5>
+            <h6 class="card-subtitle mb-2 text-muted">@Model.Brand</h6>
+            <p class="card-text">@Model.Description</p>
+            <p class="card-text"><strong>Preis:</strong> @Model.Price.ToString("C")</p>
+            <p class="card-text"><strong>Typ:</strong> @Model.Type</p>
+            <form asp-controller="Shop" asp-action="AddToCart" method="post">
+                <input type="hidden" name="ArticleId" value="@Model.ArticleId" />
+                <input type="number" name="Quantity" class="form-control" value="1" placeholder="Anzahl" />
+                <button type="submit" class="btn btn-primary mt-2">In den Warenkorb</button>
+            </form>
+        </div>
+    </div>
+</div>

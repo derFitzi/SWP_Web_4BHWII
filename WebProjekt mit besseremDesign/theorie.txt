@@ -1,0 +1,113 @@
+ASP.NET Core MVC ... Framework von Microsoft für die Webprogrammierung
+	ASP ... Active Server Pages (serverseitige Programmierung)
+	MVC ... Model View Controller (Architekturmuster)
+
+
+	Model ... Daten der Anwendung (unsere Datenklassen (User, Article, Basket, ...))
+	View ... Darstellung der Webseiten (html, CSS, js, Razor (C# in der View))
+	Razor ... nur minimalen Code (Keine Funktionalität); nur if, Schleifen, ...
+	Controller ... ist die Verbindung zwischen Model und View (hier wird die Logik dann implementiert (C# Klassen))
+	Actions ... sind Methoden innerhalb eines Controllers
+
+	Vor- und Nachteile von MVC:
+		+ bessere Trennung von daten und Darstellung
+		+ die View könnte z.B. von einem Designer (Nicht-Programmierer) erstellt werden
+		+ Testbarkeit (Unit-Tests), da html, css und C#-Code getrennt sind
+		+ übersichtlicher
+		+ besser wartbar
+		- etwas komplexer
+
+
+	Grundlegendes
+		http(s) ... bei der Webprogrammierung wird das HTTP-Protokoll verwendet
+
+		Client-Server-Modell
+			Client ...  Browser (Chrome, Firefox, ...)
+			Server ... Webserver (IIS, Apache, ...)
+
+		Request/Response
+			Request ... Anfrage des Clients (Browser) an den Server
+			Response ... Antwort des Servers an den Client
+
+
+	Routing
+		... wie werden die Requests vom Server verarbeitet
+		app.MapControllerRoute(
+			name: "default",
+			pattern: "{controller=Home}/{action=Index}/{id?}");
+
+		id? ... optionaler Parameter (muss nicht angegeben werden)
+
+		z.B. https://www.meinServer.at/home/index (Route bzw. URL)
+
+		Controller ... Home (Klasse HomeController)
+		Action ... Index (Methode Index innerhalb der Klasse HomeController)
+
+
+	_Layout.cshtml
+	 Hier wird das Gesamtlayout der Webseite definiert
+		RenderBody() ... genau an dieser Stelle wird die aktuelle View angezeigt
+
+	MiddleWare ... alle Anfragen werden zuerst an die Middleware geleitet, diese erntscheiden dann, an z.B. welchen Controller und welchen Action die Anfrage geleitet wird
+	(Middleware sind eine Aneinanderreihung von Instanzen von Klassen)
+
+	View;
+
+	@ ... bedeitet immer das C# in die View am Server eingebunden wird
+			(C# am Server wird nie an den Client übermittelt)
+
+	@model ... gibt in einer View an, welcher Datentyp (Klasse) in dieser View verwendet wird (soehe Registration .cshtml)
+
+	@Model ... wird z.B. von eimem Controller an eine View eine Instanz/Object übergeben, hat man über @Model aud diese Instanz Zugriff
+
+	DI (Dependency Injektion ... ahängige Klassen injizieren)
+		Sinn: das Erzeugen con Instanzen wird in Program.cs ausgelagert
+		(DI Container), die Instanzen werden dann (z.B. im Controllern) vom DI Container in den Czor injiziert
+
+		2 beteiligte Bereiche
+
+			1. DI Container (Program.cs)
+				- dem DI-Container mossen wir die Instanz bekanntgeben
+				- er erzeugt doe uns, bei Bedarf, die Instanz
+			
+			2. Klassen, welche eine Instanz des DI-Containers benötigen (z.B. DbManager)
+				- wir müssem eine Ctor programmieren und diesem als Parameter eine Instanz dre gewünschten Klasse übergeben
+
+
+				BEI PROGRAMM:CS eigentlich builder.Services.AddDbContext<DbManager>() verwenden
+
+				partial View
+					eine html/css/Razor-Ausschnitt in eine eigene Datei (View) auslagern)
+
+					diese View kann dann über <partial name="NameDerView" /> in einer anderen View eingebunden werden
+
+					Sinn:
+						-diese partial View kann an mehreren Stellen verwendet werden
+						-übersichtlicher
+
+			Sessions
+
+				Sinn: bei der Webprogrammierung wied das HTTp-Protokoll verwendet
+				dieses Protokoll ist zustandslos
+
+				ZUSTANDSLOS: der Server erkennt einen PC nur über eine Request-Response Anfrage
+				danach erkennt der Server den PC nicht mehr
+
+				damit der Server einen User ( PC) über mehrere Anfragen erkennt müssen wir Sessions verwenden
+
+				-es wird vom Server eiene Session-ID erzeugt und an den Client gesendet
+				-die Session-Id wird an einen Client in einem Cookie gespeichert
+				-die Seesion-Id wird nun bei jedem Aufruf an den Server übermittelt
+				=> der Server erkennt nun an der eindeutigen Session-id um welchen User (Pc es sich handelt)Value-Paare eingetragen 
+				( das bestimmt der Programmierer -z.B. bei einem eingeloggten User der Username, usw...)
+
+				z.B. "LoggedInUser" => "Hannes"
+					 "Age" => "25"
+
+					 - es gibt dafür 4 Methoden
+
+					 - SetString(Key, Value)
+					 -SetInt32(Key, Value)
+
+					 -GetString(Key)
+					 -GetInt32(Key)

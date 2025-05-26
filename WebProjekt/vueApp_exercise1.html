@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>'v-bind' Image Source Example</title>
+  <style>
+    #app {
+      border: dashed black 1px;
+      width: 250px;
+      padding: 0 10px 10px 10px;
+    }
+
+    img {
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+<h1>'v-bind' Image Source Example</h1>
+
+<div id="app">
+  <img v-bind:src="url" alt="Image will appear here">
+  <div>
+    <input type="text" v-model="url" placeholder="Enter image URL">
+  </div>
+</div>
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script>
+  const app = Vue.createApp({
+    data() {
+      return {
+        url: '' 
+      }
+    },
+  });
+
+  app.mount('#app');
+</script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+﻿@model WebProjekt.Models.Article
+
+
+
+@{
+    ViewData["Title"] = "Artikel hinzufügen";
+}
+
+@if (TempData["AddArMessage"] != null)
+{
+    <div class="alert alert-success text-center">@TempData["AddArMessage"]</div>
+}
+
+@if (TempData["AddArError"] != null)
+{
+    <div class="alert alert-danger text-center">@TempData["AddArError"]</div>
+}
+
+<h2>Artikel hinzufügen</h2>
+
+<form asp-controller="Shop" asp-action="AddArticle" method="post">
+    <table class="table">
+        <thead>
+            <tr>
+                <td colspan="2">Artikel hinzufügen Formular</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Name *</td>
+                <td>
+                    <input type="text" asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Beschreibung *</td>
+                <td>
+                    <textarea asp-for="Description" class="form-control"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Preis *</td>
+                <td>
+                    <input type="number" asp-for="Price" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Marke *</td>
+                <td>
+                    <input type="text" asp-for="Brand" class="form-control" />
+                    <span asp-validation-for="Brand" class="text-danger"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Artikeltyp *</td>
+                <td>
+                    <select asp-for="Type" class="form-control" asp-items="Html.GetEnumSelectList<WebProjekt.Models.ArticleType>()"></select>
+                    <span asp-validation-for="Type" class="text-danger"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                <button type="submit" class="btn btn-primary">Hinzufügen</button></td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2">* sind Pflichtfelder</td>
+            </tr>
+        </tfoot>
+    </table>
+</form>

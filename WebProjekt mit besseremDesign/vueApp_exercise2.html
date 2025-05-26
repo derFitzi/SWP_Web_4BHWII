@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Button with Login Check</title>
+  <style>
+    #app {
+      text-align: center;
+      margin-top: 50px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    p {
+      font-size: 18px;
+    }
+    .success {
+      color: green;
+    }
+    .warning {
+      color: orange;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+  <button @click="showMessage">Click Me</button>
+  <p v-if="isLoggedIn" class="success">{{ message }}</p>
+  <p v-else-if="isGuest" class="warning">Du bist als Gast eingeloggt. Bitte registriere dich für den vollen Zugriff.</p>
+  <p v-else class="error">Bitte logge dich ein, um fortzufahren.</p>
+</div>
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script>
+  const app = Vue.createApp({
+    data() {
+      return {
+        isLoggedIn: true, // Benutzer ist eingeloggt (true/false)
+        isGuest: false,    // Benutzer ist Gast
+        message: 'Willkommen!' // Willkommensnachricht
+      }
+    },
+    methods: {
+      showMessage() {
+        if (this.isLoggedIn) {
+          this.message = 'Willkommen zurück!';
+        } else if (this.isGuest) {
+          // Nachricht für Gäste
+          this.message = '';
+        } else {
+          // Nachricht für nicht eingeloggt
+          this.message = '';
+        }
+      }
+    }
+  });
+
+  app.mount('#app');
+</script>
+</body>
+</html>

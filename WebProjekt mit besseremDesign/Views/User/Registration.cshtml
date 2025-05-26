@@ -1,0 +1,66 @@
+﻿@model WebProjekt.Models.User
+@{
+    ViewData["Title"] = "Registration";
+}
+
+<form asp-controller="user" asp-action"registration" method="post">
+    <table class="table">
+         <thead>
+             <tr>
+                 <td colspan="3">Registrierungsformular</td>
+             </tr>
+         </thead>
+         <tbody>
+             <tr>
+                 <td>Vorname</td>
+                 <td>
+                     <input type="text" asp-for="Firstname" />
+                 </td>
+             </tr>
+            <tr>
+                <td>Nachname *</td>
+                <td>
+                    <input type="text" asp-for="Lastname" />
+                </td>
+            </tr>
+            <td>
+                <span asp-validation-for="Lastname"></span>
+            </td>
+            <tr>
+                <td>Email *</td>
+                <td>
+                    <input type="email" asp-for="Email" />
+                </td>
+                <td>
+                <span asp-validation-for="Email"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Passwort *</td>
+                <td>
+                    <input type="password" asp-for="Passwort" />
+                </td
+                <td>
+                <span asp-validation-for="Passwort"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Geburtstag</td>
+                <td>
+                    <input type="date" asp-for="Birthdate" />
+                </td
+            </tr>
+            <tr>
+                <td colspan="3"><button type="submit">Submit </button></td>
+            </tr>
+            <tr>
+                <td colspan="3"><button type="reset">Reset </button></td>
+            </tr>
+            
+         </tbody>
+         <tfoot>
+        <td colspan="3">* sind Pflichtfelder</td>
+         </tfoot>
+    </table>
+</form>
+

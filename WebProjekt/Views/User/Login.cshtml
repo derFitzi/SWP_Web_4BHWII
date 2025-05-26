@@ -1,0 +1,67 @@
+﻿@model WebProjekt.Models.LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1 class="text-center my-4">Login</h1>
+<script>
+
+</script>
+
+@if (TempData["LogMessage"] != null)
+{
+    <div class="alert alert-success text-center">@TempData["LogMessage"]</div>
+}
+
+@if (TempData["LogError"] != null)
+{
+    <div class="alert alert-danger text-center">@TempData["LogError"]</div>
+}
+
+<div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <form asp-controller="User" asp-action="Login" method="post" class="w-50">
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <td colspan="3" class="text-center">Loginformular</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="align-middle">Email *</td>
+                    <td>
+                        <input type="email" asp-for="Email" class="form-control" />
+                    </td>
+                    <td>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="align-middle">Passwort *</td>
+                    <td>
+                        <input type="password" asp-for="Password" class="form-control" />
+                    </td>
+                    <td>
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="text-center">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3" class="text-muted text-center">* sind Pflichtfelder</td>
+                </tr>
+            </tfoot>
+        </table>
+    </form>
+</div>
+
+<div class="d-flex justify-content-center mt-3">
+    <form asp-controller="User" asp-action="Logout" method="post">
+        <button type="submit" class="btn btn-secondary">Ausloggen</button>
+    </form>
+</div>

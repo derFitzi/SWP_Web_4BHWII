@@ -1,0 +1,161 @@
+﻿@* @model IEnumerable<dynamic>
+@{
+    ViewData["Title"] = "Warenkorb";
+}
+@{
+    ViewData["Title"] = "Warenkorb";
+}
+@if (TempData["WarMessage"] != null)
+{
+    <div class="alert alert-success text-center">@TempData["WarMessage"]</div>
+}
+
+@if (TempData["WarError"] != null)
+{
+    <div class="alert alert-danger text-center">@TempData["WarError"]</div>
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (Model.Any())
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Artikelname</th>
+                <th>Preis</th>
+                <th>Menge</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Article.Name</td>
+                    <td>@item.Article.Price</td>
+                    <td>@item.Quantity</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Ihr Warenkorb ist leer.</p>
+}
+
+<form asp-controller="Shop" asp-action="removeCart" method="post">
+    <input type="hidden" name="_method" value="DELETE" />
+    <button type="submit">Warenkorb leeren</button>
+</form>
+<form asp-controller="Shop" asp-action="buy" method="post">
+    <button type="submit">Kaufen</button>
+</form>
+ *@
+
+ @model IEnumerable<dynamic>
+@{
+    ViewData["Title"] = "Warenkorb";
+}
+@if (TempData["WarMessage"] != null)
+{
+    <div class="alert alert-success text-center">@TempData["WarMessage"]</div>
+}
+
+@if (TempData["WarError"] != null)
+{
+    <div class="alert alert-danger text-center">@TempData["WarError"]</div>
+}
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="section-title mb-4">
+                <i class="fas fa-shopping-cart me-2"></i>Ihr Warenkorb
+            </h2>
+
+            @if (Model.Any())
+            {
+                <div class="card shadow-sm">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th scope="col">Artikelname</th>
+                                    <th scope="col" class="text-end">Preis</th>
+                                    <th scope="col" class="text-center">Menge</th>
+                                    <th scope="col" class="text-end">Gesamt</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    decimal totalSum = 0;
+                                }
+                                @foreach (var item in Model)
+                                {
+                                    decimal itemTotal = item.Article.Price * item.Quantity;
+                                    totalSum += itemTotal;
+
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="bg-light rounded p-2 me-3">
+                                                    <i class="fas fa-box text-primary"></i>
+                                                </div>
+                                                <div>
+                                                    <h6 class="mb-0">@item.Article.Name</h6>
+                                                    <small class="text-muted">Artikel-ID: @item.Article.ArticleId</small>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-end">@item.Article.Price.ToString("C")</td>
+                                        <td class="text-center">
+                                            <span class="badge bg-light text-dark rounded-pill px-3 py-2">
+                                                @item.Quantity
+                                            </span>
+                                        </td>
+                                        <td class="text-end fw-bold">@itemTotal.ToString("C")</td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot class="table-light">
+                                <tr>
+                                    <td colspan="3" class="text-end"><strong>Gesamtsumme:</strong></td>
+                                    <td class="text-end fw-bold text-primary fs-5">@totalSum.ToString("C")</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between mt-4">
+                    <form asp-controller="Shop" asp-action="removeCart" method="post">
+                        <input type="hidden" name="_method" value="DELETE" />
+                        <button type="submit" class="btn btn-outline-danger">
+                            <i class="fas fa-trash-alt me-2"></i>Warenkorb leeren
+                        </button>
+                    </form>
+
+                    <form asp-controller="Shop" asp-action="buy" method="post">
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-shopping-bag me-2"></i>Jetzt kaufen
+                        </button>
+                    </form>
+                </div>
+            }
+            else
+            {
+                <div class="card shadow-sm p-5 text-center">
+                    <div class="py-5">
+                        <i class="fas fa-shopping-cart fa-4x text-muted mb-4"></i>
+                        <h4>Ihr Warenkorb ist leer</h4>
+                        <p class="text-muted">Fügen Sie Artikel aus unserem Shop hinzu, um Ihren Einkauf zu beginnen.</p>
+                        <a href="/shop/index" class="btn btn-primary mt-3">
+                            <i class="fas fa-store me-2"></i>Zum Shop
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+﻿@model IEnumerable<WebProjekt.Models.Article>
+
+@{
+    ViewData["Title"] = "Alle Artikel";
+}
+@{
+    ViewData["Title"] = "Warenkorb";
+}
+@if (TempData["ShoMessage"] != null)
+{
+    <div class="alert alert-success text-center">@TempData["ShoMessage"]</div>
+}
+
+@if (TempData["ShoError"] != null)
+{
+    <div class="alert alert-danger text-center">@TempData["ShoError"]</div>
+}
+
+<h2>Alle Artikel</h2>
+
+@if (!Model.Any())
+{
+    <p>Es sind keine Artikel verfügbar.</p>
+}
+else
+{
+    <div class="row">
+        @foreach (var article in Model)
+        {
+            <partial name="_ArticleTemplate" model="article" />
+        }
+    </div>
+}
+<form asp-controller="Shop" asp-action="zumWarenkorb" method="post">
+    <button type="submit" class="btn btn-primary">Zum Warenkorb</button>
+</form>

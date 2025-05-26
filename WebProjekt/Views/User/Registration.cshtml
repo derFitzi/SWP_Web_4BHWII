@@ -1,0 +1,193 @@
+﻿ @model WebProjekt.Models.User
+@{
+    ViewData["Title"] = "Registration";
+}
+@if (TempData["RegMessage"] != null)
+{
+    <div class="alert alert-success text-center">@TempData["RegMessage"]</div>
+}
+
+@if (TempData["RegError"] != null)
+{
+    <div class="alert alert-danger text-center">@TempData["RegError"]</div>
+}
+<form asp-controller="user" asp-action="Registration" method="post">
+    <table class="table">
+         <thead>
+             <tr>
+                 <td colspan="3">Registrierungsformular</td>
+             </tr>
+         </thead>
+         <tbody>
+             <tr>
+                 <td>Vorname</td>
+                 <td>
+                     <input type="text" asp-for="Firstname" />
+                 </td>
+             </tr>
+            <tr>
+                <td>Nachname *</td>
+                <td>
+                    <input type="text" asp-for="Lastname" />
+                </td>
+            </tr>
+            <td>
+                <span id="lastnameError" asp-validation-for="Lastname"></span>
+            </td>
+            <tr>
+                <td>Email *</td>
+                <td>
+                    <input type="email" asp-for="Email" />
+                </td>
+                <td>
+                <span id="emailError" asp-validation-for="Email"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Passwort *</td>
+                <td>
+                    <input type="password" asp-for="Passwort" />
+                </td
+                <td>
+                <span id="passwortError" asp-validation-for="Passwort"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Geburtstag</td>
+                <td>
+                    <input type="date" asp-for="Birthdate" />
+                    <span id="geburtsdatumError" ></span>
+                </td
+            </tr>
+            <input type="hidden" asp-for="Userrole" value="RegisteredUser" /> <!-- Standard Userrole vergeben-->
+            <tr>
+                <td colspan="3"><button id="submitButton" type="submit">Submit </button></td>
+            </tr>
+            <tr>
+                <td colspan="3"><button type="reset">Reset </button></td>
+            </tr>
+            
+         </tbody>
+         <tfoot>
+        <td colspan="3">* sind Pflichtfelder</td>
+         </tfoot>
+    </table>
+</form>
+    @section Scripts {
+        <script src="~/js/registrationvalidation.js"></script>
+              
+    }
+
+@* 
+            @model WebProjekt.Models.User
+@{
+    ViewData["Title"] = "Registration";
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Registrierungsformular</h3>
+                </div>
+
+                <div class="card-body p-4">
+                    <form asp-controller="user" asp-action="Registration" method="post" class="needs-validation">
+                        <div class="row g-3">
+                            <!-- Vorname Field -->
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Firstname" class="form-label">Vorname</label>
+                                <input type="text" class="form-control" asp-for="Firstname" placeholder="Vorname eingeben">
+                            </div>
+
+                            <!-- Nachname Field -->
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Lastname" class="form-label">Nachname *</label>
+                                <input type="text" class="form-control" asp-for="Lastname" placeholder="Nachname eingeben" required>
+                                <div class="invalid-feedback">
+                                    <span asp-validation-for="Lastname"></span>
+                                </div>
+                            </div>
+
+                            <!-- Email Field -->
+                            <div class="col-12 mb-3">
+                                <label asp-for="Email" class="form-label">Email *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                    <input type="email" class="form-control" asp-for="Email" placeholder="email@beispiel.de" required>
+                                </div>
+                                <div class="invalid-feedback">
+                                    <span asp-validation-for="Email"></span>
+                                </div>
+                            </div>
+
+                            <!-- Password Field -->
+                            <div class="col-12 mb-3">
+                                <label asp-for="Passwort" class="form-label">Passwort *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                    <input type="password" class="form-control" asp-for="Passwort" placeholder="Passwort eingeben" required>
+                                </div>
+                                <div class="invalid-feedback">
+                                    <span asp-validation-for="Passwort"></span>
+                                </div>
+                            </div>
+
+                            <!-- Birthdate Field -->
+                            <div class="col-12 mb-3">
+                                <label asp-for="Birthdate" class="form-label">Geburtstag</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                    <input type="date" class="form-control" asp-for="Birthdate">
+                                </div>
+                            </div>
+
+                            <!-- Hidden Field -->
+                            <input type="hidden" asp-for="Userrole" value="RegisteredUser" />
+
+                            <!-- Info Text -->
+                            <div class="col-12 mb-3">
+                                <p class="text-muted small"><i class="fas fa-info-circle me-1"></i> Felder mit * sind Pflichtfelder</p>
+                            </div>
+
+                            <!-- Buttons -->
+                            <div class="col-12 d-grid gap-2">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-user-plus me-2"></i>Registrieren
+                                </button>
+                                <button type="reset" class="btn btn-outline-secondary">
+                                    <i class="fas fa-undo me-2"></i>Zurücksetzen
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="card-footer text-center py-3">
+                    <p class="mb-0">Bereits registriert? <a href="/user/login" class="text-primary">Hier anmelden</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Enable Bootstrap form validation
+        (function () {
+            'use strict'
+            var forms = document.querySelectorAll('.needs-validation')
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+    </script>
+} *@
