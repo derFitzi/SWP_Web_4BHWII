@@ -63,9 +63,6 @@ namespace WebProjekt
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            
-            app.UseAuthentication();
-            app.UseAuthorization();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -73,14 +70,18 @@ namespace WebProjekt
             app.UseRouting();
 
             app.UseSession();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
+            // SignalR-Hub immer nach UseRouting, UseAuthentication, UseAuthorization!
+            app.MapHub<ChatHub>("/chathub");
+
             app.Run();
+            
         }
     }
 }

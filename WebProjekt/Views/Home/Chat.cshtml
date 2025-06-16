@@ -18,7 +18,21 @@
             .withUrl("/chathub")
             .build();
 
+        // Add connection event handlers for debugging
+        connection.onclose(function (error) {
+            console.error("SignalR connection closed:", error);
+        });
+
+        connection.onreconnecting(function (error) {
+            console.log("SignalR reconnecting:", error);
+        });
+
+        connection.onreconnected(function (connectionId) {
+            console.log("SignalR reconnected:", connectionId);
+        });
+
         connection.on("ReceiveMessage", function (user, message) {
+            console.log("Message received:", user, message); // Debug log
             const msgDiv = document.createElement("div");
             msgDiv.classList.add("chat-message");
             if (user === "Bot") {
@@ -31,19 +45,34 @@
             document.getElementById("messagesList").scrollTop = document.getElementById("messagesList").scrollHeight;
         });
 
-        connection.start().catch(function (err) {
-            return console.error(err.toString());
+        connection.start().then(function () {
+            console.log("SignalR connection started successfully");
+        }).catch(function (err) {
+            console.error("SignalR connection failed:", err.toString());
         });
 
         document.getElementById("sendButton").addEventListener("click", function (event) {
             const user = document.getElementById("userInput").value || "Gast";
             const message = document.getElementById("messageInput").value;
             if (message.trim() === "") return;
-            connection.invoke("SendMessage", user, message).catch(function (err) {
-                return console.error(err.toString());
+
+            console.log("Sending message:", user, message); // Debug log
+
+            connection.invoke("SendMessage", user, message).then(function() {
+                console.log("Message sent successfully");
+            }).catch(function (err) {
+                console.error("Failed to send message:", err.toString());
             });
+
             document.getElementById("messageInput").value = "";
             event.preventDefault();
+        });
+
+        // Add Enter key support
+        document.getElementById("messageInput").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                document.getElementById("sendButton").click();
+            }
         });
     </script>
 }
