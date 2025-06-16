@@ -6,6 +6,10 @@ using WebProjekt.Services;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
 
 namespace WebProjekt.Controllers
 {
@@ -163,6 +167,72 @@ namespace WebProjekt.Controllers
             bool mailExits = await this._dbManage.Users.AnyAsync(u => u.Email == eMail);
             return new JsonResult(mailExits);
         }
+
+        [HttpGet]
+        public IActionResult GoogleLogin()
+        {
+            // Redirect zu Google, nach Login zurück zu GoogleResponse in UserController!
+            var redirectUrl = Url.Action("GoogleResponse", "User");
+            var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
+            return Challenge(properties, GoogleDefaults.AuthenticationScheme);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GoogleResponse()
+        {
+            // Google-Authentifizierung auslesen
+            var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            if (!result.Succeeded || result.Principal == null)
+            {
+                TempData["LogError"] = "Google-Login fehlgeschlagen.";
+                return RedirectToAction("Login");
+            }
+
+            // Claims auslesen
+            var email = result.Principal.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
+            var name = result.Principal.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
+
+            if (string.IsNullOrEmpty(email))
+            {
+                TempData["LogError"] = "Google-Login: Keine E-Mail erhalten.";
+                return RedirectToAction("Login");
+            }
+
+            // User in DB suchen oder anlegen
+            var user = _dbManage.Users.FirstOrDefault(u => u.Email == email);
+            if (user == null)
+            {
+                // Namen aufteilen
+                string firstname = name;
+                string lastname = "";
+                if (!string.IsNullOrEmpty(name) && name.Contains(' '))
+                {
+                    var parts = name.Split(' ');
+                    firstname = parts[0];
+                    lastname = string.Join(" ", parts.Skip(1));
+                }
+
+                user = new User
+                {
+                    Email = email,
+                    Firstname = firstname,
+                    Lastname = lastname,
+                    Userrole = "RegisteredUser"
+                    // Passwort bleibt leer
+                };
+                _dbManage.Users.Add(user);
+                await _dbManage.SaveChangesAsync();
+            }
+
+            
+            HttpContext.Session.SetString("UserEmail", user.Email);
+            HttpContext.Session.SetString("IsAdmin", (user.Userrole == "Admin").ToString());
+            TempData["LogMessage"] = "Login mit Google war erfolgreich";
+
+            return RedirectToAction("Login", "User");
+        }
+
 
     }
 }

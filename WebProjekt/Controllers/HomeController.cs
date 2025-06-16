@@ -14,6 +14,12 @@ namespace WebProjekt.Controllers
             return View();
         }
 
+        public IActionResult Chat()
+        {
+            return View();
+        }
+
+
         // - UserController
         //        - Registration-Action
         //        - Login Action

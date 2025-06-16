@@ -1,6 +1,11 @@
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WebProjekt.Services;
+using WebProjekt.Hubs;
+
 namespace WebProjekt
 
 
@@ -27,8 +32,27 @@ namespace WebProjekt
                 options.Cookie.IsEssential = true;
             });
 
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+            })
+            .AddCookie()
+            .AddGoogle(googleOptions =>
+            {
+                googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+                googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+                googleOptions.CallbackPath = "/signin-google";
+                googleOptions.Scope.Add("email");
+                googleOptions.ClaimActions.MapJsonKey(System.Security.Claims.ClaimTypes.Email, "email");
+            });
 
 
+
+
+
+
+            builder.Services.AddSignalR();
 
             var app = builder.Build();
 
@@ -39,6 +63,9 @@ namespace WebProjekt
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

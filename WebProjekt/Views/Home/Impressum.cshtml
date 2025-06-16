@@ -1,45 +1,132 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Impressum";
 }
 
-<p class="text-center">
-    <strong>Allgemeine Geschäftsbedingungen</strong><br><br>
+<style>
+    .content-container {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 20px;
+        background: #f8f9fa;
+    }
 
-    Dies sind unsere Geschäftsbedingungen für die Nutzung unserer Website <a href="https://peters-balls.sumupstore.com" target="_blank">peters-balls.sumupstore.com</a> und den Kauf von Produkten über die Website.<br><br>
+    .content-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        max-width: 900px;
+        width: 100%;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
 
-    Falls Sie Fragen zu diesen Geschäftsbedingungen haben, dann kontaktieren Sie uns bitte über das Kontaktformular.<br><br>
+    .content-title {
+        font-size: 2rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-align: center;
+        margin-bottom: 30px;
+    }
 
-    Diese Geschäftsbedingungen sowie alle Bestimmungen oder Bedingungen in anderen Bereichen dieser Website gelten zusammen für die Nutzung dieser Website durch Kunden. Bitte beachten Sie, dass Peters Balls jederzeit Änderungen an dieser Website vornehmen oder Teile der Website entfernen kann, ohne gegenüber Kunden für solche Änderungen zu haften.<br><br>
+    .section-title {
+        font-weight: 600;
+        font-size: 1.2rem;
+        margin-top: 30px;
+        margin-bottom: 10px;
+        color: #343a40;
+    }
 
-    Peters Balls behält sich das Recht vor, diese Geschäftsbedingungen in Zukunft zu ändern, ohne Kunden hierüber ausdrücklich in Kenntnis zu setzen, und die weitere Nutzung der Website oder das Aufgeben von Bestellungen nach solchen Änderungen gelten als Ihr Einverständnis und Ihre Zustimmung zu solchen Änderungen.<br><br>
+    .content-paragraph {
+        color: #495057;
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 15px;
+    }
 
-    Ein Vertrag zwischen Ihnen als Kunde und uns kommt erst dann zustande, wenn Ihre Bestellung bearbeitet und versandt wurde.<br><br>
+    .content-link {
+        color: #667eea;
+        text-decoration: none;
+    }
 
-    <strong>Aufgeben einer Bestellung</strong><br>
-    Wenn Sie Ihre Bestellung aufgeben, erklären Sie sich mit diesen Geschäftsbedingungen einverstanden. Daher ist es wichtig, dass Sie sich diese Geschäftsbedingungen durchlesen, bevor Sie fortfahren und Ihre Bestellung aufgeben.<br><br>
+        .content-link:hover {
+            text-decoration: underline;
+        }
+</style>
 
-    <strong>Stornieren einer Bestellung</strong><br>
-    Als Kunde steht es Ihnen frei, eine Bestellung innerhalb von vierzehn Tagen zu stornieren. Der Betrag Ihrer Bestellung wird auf das Konto zurückerstattet, das ursprünglich für die Zahlung verwendet wurde.<br><br>
+<div class="content-container">
+    <div class="content-card">
+        <h1 class="content-title">Allgemeine Geschäftsbedingungen</h1>
 
-    <strong>Annahme einer Bestellung</strong><br>
-    Bei Annahme einer Bestellung erhalten Sie eine Bestellbestätigung, die an Ihre während des Bezahlvorgangs angegebene E-Mail-Adresse gesendet wird und Informationen zum Umfang und den Preisen der Bestellung enthält.<br><br>
+        <p class="content-paragraph">
+            Dies sind unsere Geschäftsbedingungen für die Nutzung unserer Website
+            <a href="https://peters-balls.sumupstore.com" class="content-link" target="_blank">peters-balls.sumupstore.com</a>
+            und den Kauf von Produkten über die Website.
+        </p>
 
-    <strong>Lieferung</strong><br>
-    Ihnen als Käufer steht es frei, zwischen den angegebenen und zu dem jeweiligen Zeitpunkt geltenden Lieferoptionen auszuwählen. Peters Balls übernimmt keine Verantwortung für Schäden, die sich während des Transports ereignen, oder für Schäden durch Verspätungen, die außerhalb der Kontrolle von Peters Balls liegen:<br>
-    - Abholung im Store<br><br>
+        <p class="content-paragraph">
+            Falls Sie Fragen zu diesen Geschäftsbedingungen haben, dann kontaktieren Sie uns bitte über das Kontaktformular.
+        </p>
 
-    <strong>Rückgaberecht</strong><br>
-    Peters Balls akzeptiert Rückgaben innerhalb von vierzehn Tagen, falls die Produkte nicht verwendet, verändert, gewaschen oder anderweitig manipuliert wurden. Produkte müssen in der Originalverpackung zurückgegeben werden.<br>
-    Ohne die vorherige schriftliche Zustimmung durch Peters Balls dürfen keine Produkte an Peters Balls zurückgegeben werden, und für Rückgaben fällt eine Rückgabegebühr an.<br><br>
+        <p class="content-paragraph">
+            Diese Geschäftsbedingungen sowie alle Bestimmungen oder Bedingungen in anderen Bereichen dieser Website gelten zusammen für die Nutzung dieser Website durch Kunden.
+        </p>
 
-    <strong>Haftung</strong><br>
-    Wir sind bestrebt, die Informationen auf dieser Website so richtig wie möglich zu halten, übernehmen jedoch weder eine ausdrückliche noch eine stillschweigende Garantie für die Richtigkeit der Informationen. Wir übernehmen auch keine Garantie für Sachverhalte, die mit der Nutzung dieser Website in Zusammenhang stehen, und Sie sind verantwortlich dafür, sicherzustellen, dass Ihre eigene Ausrüstung vor Viren oder anderen externen Faktoren geschützt ist.<br><br>
+        <p class="content-paragraph">
+            Peters Balls kann jederzeit Änderungen an dieser Website vornehmen oder Teile entfernen, ohne gegenüber Kunden hierfür zu haften.
+        </p>
 
-    Ihre Rechte sind durch den Sale of Goods and Supply of Services Act von 1980 wie auch durch den Consumer Protection Act von 2007 geschützt, sofern Sie ein Verbraucher sind. Ihre Rechte nach den geltenden Rechtsvorschriften bleiben von den Inhalten dieser Website unberührt.<br><br>
+        <p class="content-paragraph">
+            Änderungen dieser Geschäftsbedingungen gelten als akzeptiert, wenn Sie die Website weiterhin nutzen oder nach der Änderung eine Bestellung aufgeben.
+        </p>
 
-    <strong>Salvatorische Klausel</strong><br>
-    Falls sich eine Bestimmung oder Bedingung dieser Geschäftsbedingungen aus irgendeinem Grund als ungültig, rechtswidrig oder nicht durchsetzbar erweisen sollte, wird die betreffende Bestimmung oder Bedingung von den übrigen Geschäftsbedingungen, die weiterhin gültig und durchsetzbar sind, getrennt.<br><br>
+        <h2 class="section-title">Aufgeben einer Bestellung</h2>
+        <p class="content-paragraph">
+            Mit dem Absenden Ihrer Bestellung stimmen Sie diesen Bedingungen zu. Bitte lesen Sie sie daher sorgfältig durch, bevor Sie fortfahren.
+        </p>
 
-    Falls eine Bestimmung dieser Geschäftsbedingungen unrechtmäßig, ungültig oder aus irgendeinem Grund nicht durchsetzbar sein sollte, so gilt diese Bestimmung als abtrennbar, ohne Einfluss auf die Gültigkeit und Durchsetzbarkeit der übrigen Bestimmungen zu haben.
-</p>
+        <h2 class="section-title">Stornieren einer Bestellung</h2>
+        <p class="content-paragraph">
+            Sie können Ihre Bestellung innerhalb von vierzehn Tagen widerrufen. Der Betrag wird auf das ursprünglich genutzte Konto zurückerstattet.
+        </p>
+
+        <h2 class="section-title">Annahme einer Bestellung</h2>
+        <p class="content-paragraph">
+            Nach der Annahme Ihrer Bestellung erhalten Sie eine Bestellbestätigung per E-Mail mit allen relevanten Informationen.
+        </p>
+
+        <h2 class="section-title">Lieferung</h2>
+        <p class="content-paragraph">
+            Lieferoptionen stehen gemäß dem zum Zeitpunkt der Bestellung gültigen Stand zur Auswahl. Peters Balls haftet nicht für Transportschäden oder Lieferverzögerungen außerhalb unseres Einflussbereichs.
+        </p>
+        <ul class="content-paragraph">
+            <li>Abholung im Store</li>
+        </ul>
+
+        <h2 class="section-title">Rückgaberecht</h2>
+        <p class="content-paragraph">
+            Rückgaben sind innerhalb von vierzehn Tagen möglich, sofern die Produkte ungenutzt, ungewaschen und in Originalverpackung sind.
+            Rückgaben bedürfen vorheriger schriftlicher Zustimmung und können gebührenpflichtig sein.
+        </p>
+
+        <h2 class="section-title">Haftung</h2>
+        <p class="content-paragraph">
+            Wir bemühen uns um korrekte Informationen, geben jedoch keine Garantie für deren Richtigkeit oder Vollständigkeit.
+            Nutzer sind für den Schutz ihrer Geräte selbst verantwortlich.
+        </p>
+
+        <p class="content-paragraph">
+            Ihre Verbraucherrechte bleiben durch gesetzliche Vorschriften wie das Sale of Goods and Supply of Services Act 1980 und den Consumer Protection Act 2007 unberührt.
+        </p>
+
+        <h2 class="section-title">Salvatorische Klausel</h2>
+        <p class="content-paragraph">
+            Sollten einzelne Klauseln dieser AGBs ungültig oder nicht durchsetzbar sein, bleibt die Wirksamkeit der übrigen Bestimmungen unberührt.
+        </p>
+    </div>
+</div>

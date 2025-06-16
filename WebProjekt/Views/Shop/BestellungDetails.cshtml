@@ -24,6 +24,8 @@
                     <td>@item.Quantity</td>
                 </tr>
             }
+            <a asp-action="DownloadOrderPdf" asp-route-id="@ViewBag.OrderId" class="btn btn-primary">Als PDF herunterladen</a>
+
         </tbody>
     </table>
 }

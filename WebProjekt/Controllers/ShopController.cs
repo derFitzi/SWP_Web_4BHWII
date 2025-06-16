@@ -3,6 +3,10 @@ using System.Linq;
 using WebProjekt.Models;
 using WebProjekt.Services;
 
+using QuestPDF.Fluent;
+using QuestPDF.Helpers;
+using QuestPDF.Infrastructure;
+using System.IO;
 namespace WebProjekt.Controllers
 {
     public class ShopController : Controller
@@ -163,8 +167,11 @@ namespace WebProjekt.Controllers
                 .Select(oa => new { oa.Article, oa.Quantity })
                 .ToList();
 
+            ViewBag.OrderId = order.OrderId; // <--- OrderId an die View geben
+
             return View(orderDetails);
         }
+
 
         private int GetCurrentUserId()
         {
@@ -187,6 +194,61 @@ namespace WebProjekt.Controllers
             }
 
                 return userId;
+        }
+
+        public IActionResult DownloadOrderPdf(int id)
+        {
+            QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community; // <--- Lizenztyp setzen
+
+            var currentUserId = GetCurrentUserId();
+            var order = _dbManager.Orders
+                .FirstOrDefault(o => o.OrderId == id && o.UserId == currentUserId);
+
+            if (order == null)
+                return NotFound();
+
+            var orderArticles = _dbManager.OrderArticles
+                .Where(oa => oa.OrderId == order.OrderId)
+                .Select(oa => new { oa.Article.Name, oa.Article.Price, oa.Quantity })
+                .ToList();
+
+            // PDF erstellen
+            var stream = new MemoryStream();
+            Document.Create(container =>
+            {
+                container.Page(page =>
+                {
+                    page.Margin(30);
+                    page.Header().Text($"Bestellung Nr. {order.OrderId}").FontSize(20).Bold();
+                    page.Content().Table(table =>
+                    {
+                        table.ColumnsDefinition(columns =>
+                        {
+                            columns.RelativeColumn();
+                            columns.ConstantColumn(60);
+                            columns.ConstantColumn(60);
+                        });
+
+                        table.Header(header =>
+                        {
+                            header.Cell().Text("Artikel");
+                            header.Cell().Text("Menge");
+                            header.Cell().Text("Preis");
+                        });
+
+                        foreach (var item in orderArticles)
+                        {
+                            table.Cell().Text(item.Name);
+                            table.Cell().Text(item.Quantity.ToString());
+                            table.Cell().Text($"{item.Price:C}");
+                        }
+                    });
+                    page.Footer().Text($"Datum: {DateTime.Now:d}");
+                });
+            }).GeneratePdf(stream);
+
+            stream.Position = 0;
+            return File(stream, "application/pdf", $"Bestellung_{order.OrderId}.pdf");
         }
     }
 }
